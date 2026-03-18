@@ -20,3 +20,25 @@ HTML = """
     li { background: white; margin: 5px auto; width: 200px; padding: 8px; border-radius: 5px; }
   </style>
 </head>
+<body>
+  <hi>Buluttan Selam</hi>
+  <p>Adını yaz,selamını bırak </p>
+  <form method="POST">
+       <input type="text" name="isim" placeholder="Adını yaz" required>
+       <button type="submit">Gönder</button>
+       </form>
+       <h3>Ziyaretçiler:</h3>
+       <url>
+            {% for ad in isimler %}
+            <li>{{ ad }}</li>
+            {% endfor %}
+            </ul>
+            </body>
+            </html>
+            """
+
+
+def connect_db(): 
+  conn = psycopg2.connect(DATABASE_URL)
+  return conn
+
