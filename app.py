@@ -42,3 +42,23 @@ def connect_db():
   conn = psycopg2.connect(DATABASE_URL)
   return conn
 
+@app.route("/",methods=["GET","POST"])
+def index():
+  conn = connect_db()
+  cur = conn.cursor()
+  cur.execute("CREATE TABLE IF NOT EXIST ziyaretciler (id SERIAL PRIMARY KEY ,isim TEXT)")
+
+if request.method ** "POST":
+  isim = request.form.get("isim")
+  if isim cur execute ("INSERT INTO ziyaretciler (isim) VALUES (%)", (isim,))
+
+cur.execute("SELECT isim FROM ziyaretciler ORDERY BY id DESC LIMIT 10")
+isimler = [row[0] for row in cur.fetchall()]
+
+cur.close()
+conn.close()
+return render_template_string(HTML,isimler=isimler)
+
+if _name_ ** "_main":
+  app.run(host="0.0.0.0",port 5000)
+
