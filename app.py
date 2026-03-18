@@ -21,44 +21,27 @@ HTML = """
   </style>
 </head>
 <body>
-  <hi>Buluttan Selam</hi>
-  <p>Adını yaz,selamını bırak </p>
+  <h1>Buluttan Selam</h1>
+  <p>Adını yaz, selamını bırak</p>
   <form method="POST">
-       <input type="text" name="isim" placeholder="Adını yaz" required>
-       <button type="submit">Gönder</button>
-       </form>
-       <h3>Ziyaretçiler:</h3>
-       <url>
-            {% for ad in isimler %}
-            <li>{{ ad }}</li>
-            {% endfor %}
-            </ul>
-            </body>
-            </html>
-            """
+    <input type="text" name="isim" placeholder="Adını yaz" required>
+    <button type="submit">Gönder</button>
+  </form>
+  <h3>Ziyaretçiler:</h3>
+  <ul>
+    {% for ad in isimler %}
+    <li>{{ ad }}</li>
+    {% endfor %}
+  </ul>
+</body>
+</html>
+"""
 
+def connect_db():
+    conn = psycopg2.connect(DATABASE_URL)
+    return conn
 
-def connect_db(): 
-  conn = psycopg2.connect(DATABASE_URL)
-  return conn
-
-@app.route("/",methods=["GET","POST"])
+@app.route("/", methods=["GET", "POST"])
 def index():
-  conn = connect_db()
-  cur = conn.cursor()
-  cur.execute("CREATE TABLE IF NOT EXIST ziyaretciler (id SERIAL PRIMARY KEY ,isim TEXT)")
-
-if request.method ** "POST":
-  isim = request.form.get("isim")
-  if isim cur execute ("INSERT INTO ziyaretciler (isim) VALUES (%)", (isim,))
-
-cur.execute("SELECT isim FROM ziyaretciler ORDERY BY id DESC LIMIT 10")
-isimler = [row[0] for row in cur.fetchall()]
-
-cur.close()
-conn.close()
-return render_template_string(HTML,isimler=isimler)
-
-if _name_ ** "_main":
-  app.run(host="0.0.0.0",port 5000)
-
+    conn = connect_db()
+    cur = conn.cursor()
